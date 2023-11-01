@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MenuItemController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +24,13 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
 Route::middleware('auth:api')->group(function () {
+
+    // Orders API routes
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{id}', [OrderController::class, 'show']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::put('/orders/{id}', [OrderController::class, 'update']);
+
+    // Menu items API routes
+    Route::get('/menu-items', [MenuItemController::class, 'index']);
 });
