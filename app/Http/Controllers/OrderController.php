@@ -13,7 +13,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Order::with('items', 'user');
+            $query = Order::with('items.menuItem', 'user');
     
             if ($request->has('status')) {
                 $query->where('status', $request->input('status'));
@@ -97,7 +97,6 @@ class OrderController extends Controller
         }
     
         $request->validate([
-            'description' => 'string',
             'order_type' => 'string',
             'status' => 'string',
             'payment_status' => 'string',
