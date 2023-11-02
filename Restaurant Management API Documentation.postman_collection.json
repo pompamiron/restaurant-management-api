@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "30e9e686-f0f2-47fb-926e-b20addc0e6dd",
+		"name": "Restaurant Management API Documentation",
+		"description": "Welcome to the Restaurant Management API documentation. This API allows you to manage orders and menu items for your restaurant. Please refer to the following documentation to understand how to use the API effectively.\n\n## Table of Contents\n\n1. [Authentication](#authentication)\n2. [Orders API](#orders-api)\n    - [List Orders](#list-orders)\n    - [View Order](#view-order)\n    - [Create Order](#create-order)\n    - [Update Order](#update-order)\n3. [Menu Items API](#menu-items-api)\n    - [List Menu Items](#list-menu-items)\n\n## Authentication\n\nMost of the endpoints in this API require authentication using JSON Web Tokens (JWT). To get started, you should log in using your credentials to obtain a JWT token. The API provides the following authentication endpoints:\n\n### 1\\. Log in\n\n- **Endpoint:** `POST /login`\n- **Description:** Log in with your credentials to obtain an authentication token.\n- **Request Format:**`{ \"email\": \"`[<code>your-email@example.com</code>](https://mailto:your-email@example.com)`\", \"password\": \"your-password\" }`\n- **Data Response Format:**`{ \"user\":{},\"access_token\": \"your-access-token\"}`\n    \n\n### 2\\. Log out\n\n- **Endpoint:** `POST /logout`\n- **Description:** Log out and invalidate the JWT token.\n- **Authentication:** Requires an authenticated user with a valid token.\n    \n\n## Orders API\n\n### 1\\. List Orders\n\n- **Endpoint:** `GET /orders`\n- **Description:** Retrieve a list of orders.\n- **Data Response Format:**`[   {   \"id\": 1,   \"user_id\": 1,   \"description\": \"Order description\",   \"order_type\": \"Dine-In\",   \"status\": \"completed\",   \"payment_status\": \"paid\",   \"payment_method\": \"Credit Card\",   \"created_at\": \"2023-11-01T12:34:56.000Z\",   \"updated_at\": \"2023-11-01T14:45:23.000Z\"   },   {   \"id\": 2,   \"user_id\": 2,   \"description\": \"Another order\",   \"order_type\": \"Takeout\",   \"status\": \"pending\",   \"payment_status\": \"unpaid\",   \"payment_method\": \"Cash\",   \"created_at\": \"2023-11-02T10:20:45.000Z\",   \"updated_at\": \"2023-11-02T11:15:30.000Z\"   }   ]`\n    \n\n### 2\\. View Order\n\n- **Endpoint:** `GET /orders/{id}`\n- **Description:** Retrieve details of a specific order.\n    \n- **Data Response Format:**`{   \"id\": 1,   \"user_id\": 1,   \"description\": \"Order description\",   \"order_type\": \"Dine-In\",   \"status\": \"completed\",   \"payment_status\": \"paid\",   \"payment_method\": \"Credit Card\",   \"created_at\": \"2023-11-01T12:34:56.000Z\",   \"updated_at\": \"2023-11-01T14:45:23.000Z\",   \"items\": [   { \"id\": 1, \"order_id\": 1, \"menu_item_id\": 5, \"quantity\": 2, \"description\": \"Extra cheese\" },   { \"id\": 2, \"order_id\": 1, \"menu_item_id\": 7, \"quantity\": 1, \"description\": \"No onions\" }   ]   }`\n    \n\n### 3\\. Create Order\n\n- **Endpoint:** `POST /orders`\n- **Description:** Create a new order.\n- **Request Format:**`{   \"description\": \"Order description\",   \"order_type\": \"Dine-In\",   \"status\": \"pending\",   \"payment_status\": \"unpaid\",   \"payment_method\": \"Cash\",   \"items\": [   { \"menu_item_id\": 5, \"quantity\": 2, \"description\": \"Extra cheese\" }   ]   }`\n    \n- **Response Format:**`{ \"message\": \"Order created successfully\" }`\n    \n\n### 4\\. Update Order\n\n- **Endpoint:** `PUT /orders/{id}`\n- **Request Format:**`{   \"description\": \"Updated order description\",   \"order_type\": \"Takeout\",   \"status\": \"completed\",   \"payment_status\": \"paid\",   \"payment_method\": \"Credit Card\",   \"items\": [   { \"id\": 1, \"menu_item_id\": 5, \"quantity\": 2, \"description\": \"Extra cheese\" }   ]   }`\n    \n- **Response Format:** `{ \"message\": \"Order updated successfully\" }`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13060134",
+		"_collection_link": "https://www.postman.com/spacecraft-observer-48448765/workspace/restaurant-mangement-apis/collection/30900055-30e9e686-f0f2-47fb-926e-b20addc0e6dd?action=share&source=collection_link&creator=13060134"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Access token is provided\", function () {",
+									"    pm.response.to.have.jsonBody(\"access_token\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": []
+				}
+			],
+			"description": "This endpoints let you manage information about the authenticated user."
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get Orders API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Response has orders\", function () {",
+									"    const responseBody = pm.response.json();",
+									"    const data = responseBody.data",
+									"",
+									"    pm.expect(data).to.be.an('array');",
+									"",
+									"    data.forEach(function (order) {",
+									"        pm.expect(order).to.have.property('id');",
+									"        pm.expect(order).to.have.property('user_id');",
+									"        pm.expect(order).to.have.property('description');",
+									"        pm.expect(order).to.have.property('order_type');",
+									"        pm.expect(order).to.have.property('status');",
+									"        pm.expect(order).to.have.property('payment_status');",
+									"        pm.expect(order).to.have.property('payment_method');",
+									"        pm.expect(order).to.have.property('created_at');",
+									"        pm.expect(order).to.have.property('updated_at');",
+									"        pm.expect(order).to.have.property('user_name');",
+									"",
+									"        // If items exist, check each item's properties",
+									"        if (order.items.length > 0) {",
+									"            order.items.forEach(function (item) {",
+									"                pm.expect(item).to.have.property('id');",
+									"                pm.expect(item).to.have.property('order_id');",
+									"                pm.expect(item).to.have.property('menu_item_id');",
+									"                pm.expect(item).to.have.property('quantity');",
+									"                pm.expect(item).to.have.property('description');",
+									"                pm.expect(item).to.have.property('created_at');",
+									"                pm.expect(item).to.have.property('updated_at');",
+									"                pm.expect(item).to.have.property('deleted_at').to.be.null;",
+									"                pm.expect(item).to.have.property('menu_item');",
+									"",
+									"                // Check menu item properties",
+									"                pm.expect(item.menu_item).to.have.property('id');",
+									"                pm.expect(item.menu_item).to.have.property('name');",
+									"                pm.expect(item.menu_item).to.have.property('price');",
+									"                pm.expect(item.menu_item).to.have.property('created_at');",
+									"                pm.expect(item.menu_item).to.have.property('updated_at');",
+									"            });",
+									"        }",
+									"    });",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "",
+									"description": "'pending', 'completed', 'canceled'",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Orders by ID API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response has orders\", function () {",
+									"    // Parse the JSON response body",
+									"    var responseBody = pm.response.json();",
+									"",
+									"    // Check if \"orders\" is an array",
+									"    pm.expect(responseBody.data.items).to.be.an(\"array\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}"
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Order API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_type\": \"Dine-In\",\n    \"status\": \"completed\",\n    \"payment_status\": \"paid\",\n    \"payment_method\": \"Credit Card\",\n    \"description\": \"This is a test order for Table 5.\",\n    \"items\": [\n        {\n            \"menu_item_id\": 1,\n            \"quantity\": 2,\n            \"description\": \"Add extra cheese.\"\n        },\n        {\n            \"menu_item_id\": 2,\n            \"quantity\": 1,\n            \"description\": \"Thin crust, extra mushrooms.\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						},
+						"description": "Deletes a collection."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_type\": \"Dine-In\",\n    \"status\": \"completed\",\n    \"payment_status\": \"paid\",\n    \"payment_method\": \"Credit Card\",\n    \"description\": \"This is a test order for Table 5.\",\n    \"items\": [\n        {\n            \"menu_item_id\": 1,\n            \"quantity\": 2,\n            \"description\": \"Add extra cheese.\"\n        },\n        {\n            \"menu_item_id\": 2,\n            \"quantity\": 1,\n            \"description\": \"Thin crust, extra mushrooms.\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"{{order_id}}"
+							]
+						},
+						"description": "Deletes a collection."
+					},
+					"response": []
+				}
+			],
+			"description": "The `/orders` endpoints let you manage your orders APIs"
+		},
+		{
+			"name": "Menu Items",
+			"item": [
+				{
+					"name": "Get Menu Items API",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response has valid items\", function () {",
+									"    // Parse the response body as JSON",
+									"    const responseBody = pm.response.json();",
+									"",
+									"    const data = responseBody.data",
+									"",
+									"    // Check that the response is an array",
+									"    pm.expect(data).to.be.an('array');",
+									"",
+									"    // Loop through each item in the array",
+									"    data.forEach(function (item) {",
+									"        pm.test(\"Item has valid structure\", function () {",
+									"            // Check that each item object has the expected properties",
+									"            pm.expect(item).to.have.property('id');",
+									"            pm.expect(item).to.have.property('name');",
+									"            pm.expect(item).to.have.property('price');",
+									"            pm.expect(item).to.have.property('created_at');",
+									"            pm.expect(item).to.have.property('updated_at');",
+									"",
+									"            // Additional property-specific checks",
+									"            pm.expect(item.id).to.be.a('number');",
+									"            pm.expect(item.name).to.be.a('string');",
+									"            pm.expect(item.price).to.be.a('string');",
+									"            pm.expect(item.created_at).to.be.a('string');",
+									"            pm.expect(item.updated_at).to.be.a('string');",
+									"        });",
+									"    });",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/menu-items",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"menu-items"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "",
+									"description": "'pending', 'completed', 'canceled'",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				}
+			],
+			"description": "The `/orders` endpoints let you manage your orders APIs"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "your_url",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "your@email.ex",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "password",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "your_access_token",
+			"type": "string"
+		},
+		{
+			"key": "order_id",
+			"value": "your_order_id",
+			"type": "string"
+		}
+	]
+}
