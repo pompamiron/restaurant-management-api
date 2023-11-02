@@ -21,6 +21,10 @@ This is the backend portion of a Restaurant Management Web Application. It provi
 6. Run database seeders: `php artisan db:seed`
 7. Run create Encryption key: `php artisan passport:install`
 
+## Start the Laravel development server
+
+    `php artisan serve`
+
 ## Authentication
 
 To access most of the API endpoints, you need to be authenticated using JWT (JSON Web Token). The API provides two authentication-related endpoints:
