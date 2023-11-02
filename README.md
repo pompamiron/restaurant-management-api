@@ -51,6 +51,6 @@ The following endpoints are available for managing orders and menu items:
 
 - **List Menu Items:** `GET /menu-items` - Retrieve a list of menu items.
 
-## Postman Tests
+## Postman Tests and APIs Documentation
 
-To facilitate testing the API, you can use Postman, a popular API testing tool. We have created a collection of Postman tests to help you interact with the API easily. You can import the collection by clicking [here](https://elements.getpostman.com/redirect?entityId=30900055-30e9e686-f0f2-47fb-926e-b20addc0e6dd&entityType=collection).
+To facilitate testing the API, you can use Postman, a popular API testing tool. I have created a collection of Postman tests to help you interact with the API easily. You can import the collection by clicking [here](https://elements.getpostman.com/redirect?entityId=30900055-30e9e686-f0f2-47fb-926e-b20addc0e6dd&entityType=collection).
