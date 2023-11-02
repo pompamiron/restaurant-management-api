@@ -53,11 +53,9 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'description' => 'required|string',
             'order_type' => 'required|string',
             'status' => 'required|string',
             'payment_status' => 'required|string',
-            'payment_method' => 'required|string',
             'items' => 'required|array',
         ]);
     
