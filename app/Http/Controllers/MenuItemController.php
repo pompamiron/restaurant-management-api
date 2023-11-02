@@ -9,6 +9,6 @@ class MenuItemController extends Controller
     public function index()
     {
         $menuItems = MenuItem::all();
-        return response()->json($menuItems, 200);
+        return response()->json(['data' => $menuItems], 200);
     }
 }
